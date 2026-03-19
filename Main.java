@@ -1,8 +1,10 @@
 import static java.util.Objects.nonNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static java.util.Objects.isNull;
@@ -20,10 +22,62 @@ public class Main {
     private final static int BOARD_LIMIT = 9;
 
     public static void main(String[] args) {
-        final var positions = Stream.of(args)
-                .collect(Collectors.toMap(
-                        k -> k.split(";")[0],
-                        v -> v.split(";")[1]));
+        Map<String, String> positions;
+        if (args.length > 0) {
+            positions = Stream.of(args)
+                    .collect(Collectors.toMap(k -> k.split(";")[0],
+                            v -> v.split(";")[1]));
+
+        } else {
+            positions = new HashMap<>();
+            // --- LINHA 0 ---
+            positions.put("0,0", "5,true");
+            positions.put("0,1", "3,true");
+            positions.put("0,4", "7,true");
+
+            // --- LINHA 1 ---
+            positions.put("1,0", "6,true");
+            positions.put("1,3", "1,true");
+            positions.put("1,4", "9,true");
+            positions.put("1,5", "5,true");
+
+            // --- LINHA 2 ---
+            positions.put("2,1", "9,true");
+            positions.put("2,2", "8,true");
+            positions.put("2,7", "6,true");
+
+            // --- LINHA 3 ---
+            positions.put("3,0", "8,true");
+            positions.put("3,4", "6,true");
+            positions.put("3,8", "3,true");
+
+            // --- LINHA 4 ---
+            positions.put("4,0", "4,true");
+            positions.put("4,3", "8,true");
+            positions.put("4,5", "3,true");
+            positions.put("4,8", "1,true");
+
+            // --- LINHA 5 ---
+            positions.put("5,0", "7,true");
+            positions.put("5,4", "2,true");
+            positions.put("5,8", "6,true");
+
+            // --- LINHA 6 ---
+            positions.put("6,1", "6,true");
+            positions.put("6,6", "2,true");
+            positions.put("6,7", "8,true");
+
+            // --- LINHA 7 ---
+            positions.put("7,3", "4,true");
+            positions.put("7,4", "1,true");
+            positions.put("7,5", "9,true");
+            positions.put("7,8", "5,true");
+
+            // --- LINHA 8 ---
+            positions.put("8,4", "8,true");
+            positions.put("8,7", "7,true");
+            positions.put("8,8", "9,true");
+        }
         var option = -1;
         while (true) {
             System.out.println("Selecione uma das opções a seguir");
