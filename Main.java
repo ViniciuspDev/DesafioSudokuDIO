@@ -3,11 +3,9 @@ import static java.util.Objects.nonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 import java.util.Map;
 
 import util.BoardTemplate;
