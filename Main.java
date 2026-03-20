@@ -216,7 +216,7 @@ public class Main {
 
         System.out.println("Tem certeza de que deseja limpar seu jogo e perder todo o seu progresso?");
         var confirm = scanner.next();
-        while (!confirm.equalsIgnoreCase("sim") || !confirm.equalsIgnoreCase("não")) {
+        while (!confirm.equalsIgnoreCase("sim") && !confirm.equalsIgnoreCase("não")) {
             System.out.println("informe 'sim' ou 'não'");
             confirm = scanner.next();
 
