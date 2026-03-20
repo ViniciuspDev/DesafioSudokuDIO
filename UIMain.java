@@ -1,10 +1,5 @@
-import javax.swing.JFrame;
-import custom.panel.MainPanel;
-import custom.screen.MainScreen;
-import custom.frame.MainFrame;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
+import custom.screen.MainScreen;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;

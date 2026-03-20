@@ -1,6 +1,10 @@
 package custom.screen;
 
+import static service.EventEnum.CLEAR_SPACE;
+
 import java.awt.Dimension;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -12,14 +16,19 @@ import custom.button.CheckGameStatusButton;
 import custom.button.FinishGameButton;
 import custom.button.ResetButton;
 import custom.frame.MainFrame;
+import custom.input.NumberText;
 import custom.panel.MainPanel;
+import custom.panel.SudokuSector;
+import model.Space;
 import service.BoardService;
+import service.NotifierService;
 
 public class MainScreen {
 
     private final static Dimension dimension = new Dimension(600, 600);
 
     private final BoardService boardService;
+    private final NotifierService notifierService;
 
     private JButton finishGameButton;
     private JButton checkGameStatusButton;
@@ -27,17 +36,49 @@ public class MainScreen {
 
     public MainScreen(final Map<String, String> gameConfig) {
         this.boardService = new BoardService(gameConfig);
+        this.notifierService = new NotifierService();
 
     }
 
     public void buildMainScreen() {
         JPanel mainPanel = new MainPanel(dimension);
         JFrame mainFrame = new MainFrame(dimension, mainPanel);
+        for (int r = 0; r < 9; r += 3) {
+            var endRow = r + 2;
+            for (int c = 0; c < 9; c += 3) {
+                var endCol = c + 2;
+                var spaces = getSpacesFromSector(boardService.getSpaces(), c, endCol, r, endRow);
+                mainPanel.add(generateSction(spaces));
+
+            }
+
+        }
         addResetButton(mainPanel);
         addCheckGameStatusButton(mainPanel);
         addFinishGameButton(mainPanel);
         mainFrame.revalidate();
         mainFrame.repaint();
+    }
+
+    private List<Space> getSpacesFromSector(List<List<Space>> spaces,
+            final int initCol, final int endCol,
+            final int initRow, final int endRow) {
+
+        List<Space> spaceSector = new ArrayList<>();
+        for (int r = initRow; r <= endRow; r++) {
+            for (int c = initCol; c <= endCol; c++) {
+                spaceSector.add(spaces.get(c).get(r));
+
+            }
+
+        }
+        return spaceSector;
+    }
+
+    private JPanel generateSction(final List<Space> spaces) {
+        List<NumberText> fields = new ArrayList<>(spaces.stream().map(NumberText::new).toList());
+        fields.forEach(t -> notifierService.subscriber(CLEAR_SPACE, t));
+        return new SudokuSector(fields);
     }
 
     private void addFinishGameButton(final JPanel maiPanel) {
@@ -78,6 +119,7 @@ public class MainScreen {
                     "Limpar o jogo", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (dialogResult == 0) {
                 boardService.reset();
+                notifierService.notify(CLEAR_SPACE);
 
             }
         });

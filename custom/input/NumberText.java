@@ -2,16 +2,19 @@ package custom.input;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.EventListener;
 
 import static java.awt.Font.PLAIN;
+import static service.EventEnum.CLEAR_SPACE;
 
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import model.Space;
+import service.EventEnum;
 
-public class NumberText extends JTextField {
+public class NumberText extends JTextField implements EventListener, service.EventListener {
 
     private final Space space;
 
@@ -56,6 +59,14 @@ public class NumberText extends JTextField {
 
             }
         });
+             @Override
+            public void update(final EventEnum eventType){
+            if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())) {
+                this.setText("");
+                
+            }
+
+        }
     }
 
 }
