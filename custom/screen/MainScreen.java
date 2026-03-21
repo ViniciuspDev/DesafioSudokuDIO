@@ -77,7 +77,7 @@ public class MainScreen {
 
     private JPanel generateSction(final List<Space> spaces) {
         List<NumberText> fields = new ArrayList<>(spaces.stream().map(NumberText::new).toList());
-        fields.forEach(t -> notifierService.subscriber(CLEAR_SPACE, t));
+        fields.forEach(t -> notifierService.subscribe(CLEAR_SPACE, t));
         return new SudokuSector(fields);
     }
 
@@ -105,11 +105,13 @@ public class MainScreen {
             var message = switch (gameStatus) {
                 case NON_STARTED -> "O jogo não foi iniciado";
                 case INCOMPLETE -> "O jogo está incompleto";
-                case COMPLETE -> "O jogo está completo, Parabéns!";
+                case COMPLETE -> "O jogo está completo";
             };
             message += hasErrors ? " e contém erros" : " e não contém erros";
+            JOptionPane.showMessageDialog(null, message);
         });
         maiPanel.add(checkGameStatusButton);
+        
 
     }
 
