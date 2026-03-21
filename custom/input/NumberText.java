@@ -59,14 +59,16 @@ public class NumberText extends JTextField implements EventListener, service.Eve
 
             }
         });
-             @Override
-            public void update(final EventEnum eventType){
-            if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())) {
-                this.setText("");
-                
-            }
+             
 
-        }
+        
     }
 
+    @Override
+    public void update(EventEnum eventType) {
+        if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())) {
+                this.setText("");
+        }
+
+    }
 }
