@@ -9,20 +9,21 @@ import java.util.Map;
 
 public class NotifierService {
 
-    private Map<EventEnum, List<EventListener>> listener = new HashMap<>() {
+    private final Map<EventEnum, List<EventListener>> listeners = new HashMap<>() {
         {
             put(CLEAR_SPACE, new ArrayList<>());
         }
     };
 
-    public void subscriber(final EventEnum eventType, EventListener listener) {
-        var selectedListeners = ((Map<EventEnum, List<EventListener>>) listener).get(eventType);
+    public void subscribe(final EventEnum eventType, EventListener listener) {
+        var selectedListeners = listeners.get(eventType);
         selectedListeners.add(listener);
     }
 
     public void notify(final EventEnum eventType) {
-        listener.get(eventType).forEach(l -> l.update(eventType));
+        listeners.get(eventType).forEach(l -> l.update(eventType));
 
     }
+
 
 }
